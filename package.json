@@ -1,0 +1,31 @@
+{
+  "name": "simplemailer",
+  "version": "1.0.0",
+  "description": "mail easily with an wrapper for nodemailer",
+  "main": "simpleMailer.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvdknaap/simplemailer.git"
+  },
+  "keywords": [
+    "simplemailer",
+    "nodemailer"
+  ],
+  "author": "Danny van der Knaap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvdknaap/simplemailer/issues"
+  },
+  "homepage": "https://github.com/dvdknaap/simplemailer#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "nodemailer": "^4.2.0",
+    "nodemailer-html-to-text": "^2.1.0"
+  }
+}
