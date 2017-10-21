@@ -2,17 +2,12 @@
 const fs   = require('fs');
 let config = false;
 
+let path   = require('path');
+let appDir = path.dirname(require.main.filename);
+
 // Check if config is in project root
-if (fs.existsSync('../../config.json')) {
-	config = require('../../config.json');
-}
-// Use config file in nodemailer node_modules
-else if (fs.existsSync('config.json')) {
-	config = require('./config.json');
-}
-// Use config file in nodemailer node_modules
-else if (fs.existsSync(__dirname+'/../../config.json')) {
-	config = require(__dirname+'/../../config.json');
+if (fs.existsSync(appDir+'/config.json')) {
+	config = require(appDir+'/config.json');
 }
 // No config.json found
 else {
