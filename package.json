@@ -1,6 +1,6 @@
 {
   "name": "simplemailer",
-  "version": "1.0.1.1",
+  "version": "1.0.2",
   "description": "mail easily with an wrapper for nodemailer",
   "main": "simpleMailer.js",
   "directories": {
