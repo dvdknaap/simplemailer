@@ -10,6 +10,10 @@ if (fs.existsSync('../../config.json')) {
 else if (fs.existsSync('config.json')) {
 	config = require('./config.json');
 }
+// Use config file in nodemailer node_modules
+else if (fs.existsSync(__dirname+'/../../config.json')) {
+	config = require(__dirname+'/../../config.json');
+}
 // No config.json found
 else {
 	throw new Error("No config.json found, read README.md for help");
@@ -252,8 +256,8 @@ var simpleMailer = {
 			serverConnection = _.merge(this.serverConnection, customServerConnection);
 		}
 		serverConnection.debug = true;
-		console.info(serverConnection, 'serverConnection');
-		return nodemailer.createTransport(serverConnection, {debug: true});
+
+		return nodemailer.createTransport(serverConnection);
 	},
 	/**
 	 * Send mail
