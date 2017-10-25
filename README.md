@@ -52,3 +52,6 @@ simpleMailer.
 	send()
 ;
 ```
+
+#### Config
+Be sure you have an config.json file in your root directory with the content as discribed in `config.json.example`
