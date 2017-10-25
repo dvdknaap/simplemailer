@@ -1,6 +1,6 @@
 {
   "name": "simplemailer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "mail easily with an wrapper for nodemailer",
   "main": "simpleMailer.js",
   "directories": {
@@ -18,7 +18,7 @@
     "nodemailer"
   ],
   "author": "Danny van der Knaap",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dvdknaap/simplemailer/issues"
   },

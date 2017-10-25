@@ -55,3 +55,29 @@ simpleMailer.
 
 #### Config
 Be sure you have an config.json file in your root directory with the content as discribed in `config.json.example`
+```javascript
+{
+  "SIMPLEMAILER": {
+    "SERVER": {
+      "HOST":"mail.domain.com",
+      "PORT":"587",
+      "USERNAME":"username",
+      "PASSWORD":"password",
+      "SECURE": "false",
+      "DKIM": {
+        "DOMAINNAME": "mail.domain.com",
+        "KEYSELECTOR": "2017",
+        "PRIVATEKEY": "./DKIM/private.key",
+        "CACHEDIR": "/tmp",
+        "CACHETRESHOLD": 86400
+      },
+      "TLS": {
+          "REJECTUNAUTHORIZED": false
+      }
+    },
+    "FROMNAME": "from name",
+    "FROMEMAIL": "email@domain.com",
+    "REPLYTO": "reply@domain.com"
+  },
+}
+```
