@@ -1,27 +1,74 @@
 'use strict';
-const fs   = require('fs');
-let config = false;
-
-let path   = require('path');
-let appDir = path.dirname(require.main.filename);
-
-// Check if config is in project root
-if (fs.existsSync(appDir+'/config.json')) {
-	config = require(appDir+'/config.json');
-}
-// No config.json found
-else {
-	throw new Error("No config.json found, read README.md for help");
-}
 
 const nodemailer = require('nodemailer');
 const htmlToText = require('nodemailer-html-to-text').htmlToText;
 const _          = require('lodash/fp/object');
 
 var simpleMailer = {
+	"init": function (configLocation) {
+
+		const fs   = require('fs');
+
+		// Check if we received an app dir
+		if (typeof configLocation === "undefined") {
+			let path   = require('path');
+			configLocation = path.dirname(require.main.filename+'/config.json');
+		}
+
+		// Check if config is in project root
+		if (fs.existsSync(configLocation)) {
+			this.config = require(configLocation);
+
+			this.options =  {
+			    from: this.config.SIMPLEMAILER.FROMNAME+" <"+this.config.SIMPLEMAILER.FROMEMAIL+">",
+			    to: '',
+			    subject: '',
+			    text: '',
+			    html: ''
+			};
+
+			this.serverConnection =  {
+			    host: this.config.SIMPLEMAILER.SERVER.HOST,
+			    port: this.config.SIMPLEMAILER.SERVER.PORT,
+			    secure: this.config.SIMPLEMAILER.SERVER.SECURE, // upgrade later with STARTTLS
+			    auth: {
+			        user: this.config.SIMPLEMAILER.SERVER.USERNAME,
+			        pass: this.config.SIMPLEMAILER.SERVER.PASSWORD
+			    }
+			};
+		}
+		// No config.json found
+		else {
+			throw new Error("No config.json found, read README.md for help");
+		}
+	},
+	"config": {
+		"SIMPLEMAILER": {
+			"SERVER": {
+				"HOST":"mail.domain.com",
+				"PORT":"587",
+				"USERNAME":"username",
+				"PASSWORD":"password",
+				"SECURE": "false",
+				"DKIM": {
+				"DOMAINNAME": "mail.domain.com",
+				"KEYSELECTOR": "2017",
+				"PRIVATEKEY": "./DKIM/private.key",
+				"CACHEDIR": "/tmp",
+				"CACHETRESHOLD": 86400
+			},
+			"TLS": {
+				"REJECTUNAUTHORIZED": false
+			},
+		},
+		"FROMNAME": "from name",
+		"FROMEMAIL": "email@domain.com",
+		"REPLYTO": "reply@domain.com"
+		}
+	},
 	//Default options for sending mail
 	"options":  {
-	    from: config.SIMPLEMAILER.FROMNAME+" <"+config.SIMPLEMAILER.FROMEMAIL+">",
+	    from: "",
 	    to: '',
 	    subject: '',
 	    text: '',
@@ -29,12 +76,12 @@ var simpleMailer = {
 	},
 	//Default server connection
 	"serverConnection":  {
-	    host: config.SIMPLEMAILER.SERVER.HOST,
-	    port: config.SIMPLEMAILER.SERVER.PORT,
-	    secure: config.SIMPLEMAILER.SERVER.SECURE, // upgrade later with STARTTLS
+	    host: "",
+	    port: "",
+	    secure: "", // upgrade later with STARTTLS
 	    auth: {
-	        user: config.SIMPLEMAILER.SERVER.USERNAME,
-	        pass: config.SIMPLEMAILER.SERVER.PASSWORD
+	        user: "",
+	        pass: ""
 	    }
 	},
 	/**
@@ -231,19 +278,19 @@ var simpleMailer = {
 	"getTransporter": function (customServerConnection) {
 		let serverConnection = this.serverConnection;
 
-		if (typeof config.SIMPLEMAILER.SERVER.TLS !== "undefined") {
+		if (typeof this.config.SIMPLEMAILER.SERVER.TLS !== "undefined") {
 			serverConnection.tls= {
-				rejectUnauthorized: config.SIMPLEMAILER.SERVER.TLS.REJECTUNAUTHORIZED
+				rejectUnauthorized: this.config.SIMPLEMAILER.SERVER.TLS.REJECTUNAUTHORIZED
 			};
 		}
 
-		if (typeof config.SIMPLEMAILER.SERVER.DKIM !== "undefined" && config.SIMPLEMAILER.SERVER.DKIM.DOMAINNAME !== '') {
+		if (typeof this.config.SIMPLEMAILER.SERVER.DKIM !== "undefined" && this.config.SIMPLEMAILER.SERVER.DKIM.DOMAINNAME !== '') {
 			serverConnection.dkim = {
-		        domainName: config.SIMPLEMAILER.SERVER.DKIM.DOMAINNAME,
-		        keySelector: config.SIMPLEMAILER.SERVER.DKIM.KEYSELECTOR,
-		        privateKey: fs.readFileSync(config.SIMPLEMAILER.SERVER.DKIM.PRIVATEKEY),
-		        cacheDir: config.SIMPLEMAILER.SERVER.DKIM.CACHEDIR,
-		        cacheTreshold: config.SIMPLEMAILER.SERVER.DKIM.CACHETRESHOLD
+		        domainName: this.config.SIMPLEMAILER.SERVER.DKIM.DOMAINNAME,
+		        keySelector: this.config.SIMPLEMAILER.SERVER.DKIM.KEYSELECTOR,
+		        privateKey: fs.readFileSync(this.config.SIMPLEMAILER.SERVER.DKIM.PRIVATEKEY),
+		        cacheDir: this.config.SIMPLEMAILER.SERVER.DKIM.CACHEDIR,
+		        cacheTreshold: this.config.SIMPLEMAILER.SERVER.DKIM.CACHETRESHOLD
 		    };
 		}
 
