@@ -10,12 +10,11 @@ Easy and simple to use mailer thats using [nodemail](https://nodemailer.com)
 #### Test
 ```node tests/examples.js```
 
-
-
 #### Easy To use
 There are 4 different posibilities that you can use
 1. Directly pass all info as object to send method
 ```javascript
+simpleMailer.init('/location/to/your/config.json');
 simpleMailer.send({
     to: 'email@domain.com',
     subject: 'test mail 1',
@@ -26,6 +25,7 @@ simpleMailer.send({
 
 2. When you dont add an text mail simplemailer will create one from you html
 ```javascript
+simpleMailer.init('/location/to/your/config.json');
 simpleMailer.send({
     to: 'email@domain.com',
     subject: 'test mail 2',
@@ -35,21 +35,23 @@ simpleMailer.send({
 
 3. You can pass all required params as function with chaining
 ```javascript
+simpleMailer.init('/location/to/your/config.json');
 simpleMailer.
-	to('email@domain.com').
-	subject('test mail 3').
-	html('<b>test html mail 3</b>').
-	send()
+    to('email@domain.com').
+    subject('test mail 3').
+    html('<b>test html mail 3</b>').
+    send()
 ;
 ```
 
 4. You can even add an template path that will be used for the html and text mail
 ```javascript
+simpleMailer.init('/location/to/your/config.json');
 simpleMailer.
-	to('email@domain.com').
-	subject('test mail 4').
-	template('./tests/testMail.html').
-	send()
+    to('email@domain.com').
+    subject('test mail 4').
+    template('./tests/testMail.html').
+    send()
 ;
 ```
 
