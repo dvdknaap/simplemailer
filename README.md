@@ -1,5 +1,5 @@
 # Simplemailer
-[![NPM Version](http://img.shields.io/npm/v/simplemailer.svg?style=flat)](https://www.npmjs.org/package/simplemailer)
+[![NPM Version](https://img.shields.io/npm/v/simplemailer.svg?style=flat)](https://www.npmjs.org/package/simplemailer)
 
 Easy and simple to use mailer thats using [nodemail](https://nodemailer.com)
 
