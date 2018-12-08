@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/dvdknaap/simplemailer#readme",
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "nodemailer": "^4.2.0",
     "nodemailer-html-to-text": "^2.1.0"
   }
